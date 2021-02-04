@@ -81,7 +81,8 @@
                     formData.append("zipfile", content);
                     axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
                         headers: {
-                            "content-type": "multipart/form-data"
+                            "content-type": "multipart/form-data",
+                            "Access-Control-Allow-Origin": "*",
                         },
                         params: {
                             "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",

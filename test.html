@@ -150,13 +150,7 @@
                     console.log(lat);
                     console.log(lon);
                   
-                    marker = new H.map.Marker({ lat: lat, lng: lon});
-
-                    map.addObject(marker);
-                    //creating a positional marker
-                    //var marker = new H.map.Marker({ lat: 27.9588, lng: 76.40});
-
-                    //geofencing service
+                    
                     var geofencing = platform.getGeofencingService();
 
                     
@@ -180,6 +174,7 @@
                             result => {
                                 if(result.geometries.length > 0) {
                                     swal("Within the geofence!");
+                                    console.log("Found you buddy!!!!");
                                     console.log(result);
                                 }
                                 

@@ -13,17 +13,17 @@
         <script>
                 
                 const platform = new H.service.Platform ({
-                    'apikey' : 'fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk',
-                    'useCIT': true,
-                    'useHTTPS': true,
-                });
-                const map = new H.Map(
-                    document.getElementById('map'),
-                    platform.createDefaultLayers().vector.normal.map,
-                    {
-                        zoom: 15,
-                        center: { lat: 18.533732, lng: 73.944721 },
-                    }
+                        'apikey' : 'fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk',
+                        'useCIT': true,
+                        'useHTTPS': true,
+                    });
+                    const map = new H.Map(
+                        document.getElementById('map'),
+                        platform.createDefaultLayers().vector.normal.map,
+                        {
+                            zoom: 15,
+                            center: { lat: 18.533732, lng: 73.944721 },
+                        }
                 );
                 
                 const mapEvents = new H.mapevents.MapEvents(map);
@@ -73,14 +73,14 @@
                             "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
                             "layer_id": "1235"
 
-                        }
-                    }).then(result => {
-                        console.log(result);
+                            }
+                        }).then(result => {
+                            console.log(result);
+                        }, error => {
+                            console.error(error);
+                        });
                     }, error => {
                         console.error(error);
-                    });
-                }, error => {
-                    console.error(error);
                 });
 
                 //zip file for Road
@@ -97,14 +97,14 @@
                             "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
                             "layer_id": "1236"
 
-                        }
-                    }).then(result => {
-                        console.log(result);
+                            }
+                        }).then(result => {
+                            console.log(result);
+                        }, error => {
+                            console.error(error);
+                        });
                     }, error => {
                         console.error(error);
-                    });
-                }, error => {
-                    console.error(error);
                 });
                 
                 const zip_house = new JSZip();
@@ -120,14 +120,14 @@
                             "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
                             "layer_id": "1237"
 
-                        }
-                    }).then(result => {
-                        console.log(result);
+                            }
+                        }).then(result => {
+                            console.log(result);
+                        }, error => {
+                            console.error(error);
+                        });
                     }, error => {
                         console.error(error);
-                    });
-                }, error => {
-                    console.error(error);
                 });
 
                 navigator.geolocation.watchPosition(({coords}) => {

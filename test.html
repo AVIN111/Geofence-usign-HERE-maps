@@ -4,179 +4,179 @@
     <meta charset="utf-8">
 </head>
 <body style="margin: 0">
-        <div id="map" style="width: 100vw; height: 100vh"></div>
-        <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-core-legacy.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-service-legacy.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://stuk.github.io/jszip/dist/jszip.js"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-                
-                const platform = new H.service.Platform ({
-                        'apikey' : 'fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk',
-                        'useCIT': true,
-                        'useHTTPS': true,
+    <div id="map" style="width: 100vw; height: 100vh"></div>
+    <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-core-legacy.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-service-legacy.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://stuk.github.io/jszip/dist/jszip.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+
+            const platform = new H.service.Platform ({
+                    'apikey' : 'fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk',
+                    'useCIT': true,
+                    'useHTTPS': true,
+                });
+                const map = new H.Map (
+                    document.getElementById('map'),
+                    platform.createDefaultLayers().vector.normal.map,
+                    {
+                        zoom: 15,
+                        center: { lat: 18.533732, lng: 73.944721 },
+                    }
+            );
+
+            const mapEvents = new H.mapevents.MapEvents(map);
+            const mapBehavior = new H.mapevents.Behavior(mapEvents);
+
+
+
+            //near by shop testing
+            const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 13);
+            map.addObject(shop);
+
+
+            const road = new H.map.Circle({lat: 18.534723, lng: 73.944817}, 13);
+            map.addObject(road);
+
+            const house = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 13);
+            map.addObject(house);
+
+
+            //console getting the wkt format data
+            const geometry_shop = shop.getGeometry();
+            const wkt_shop = geometry_shop.toString();
+            console.log(wkt_shop);
+
+
+            const geometry_road = road.getGeometry();
+            const wkt_road = geometry_road.toString();
+            console.log(wkt_road);
+
+            const geometry_house = house.getGeometry();
+            const wkt_house = geometry_house.toString();
+            console.log(wkt_house);
+
+
+
+            //zip file for shop
+            const zip_shop = new JSZip();
+            zip_shop.file("data_shop.wkt","SHOP\tWKT\n" + "Shop" + "\t" + wkt_shop);
+            zip_shop.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1235"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
                     });
-                    const map = new H.Map (
-                        document.getElementById('map'),
-                        platform.createDefaultLayers().vector.normal.map,
-                        {
-                            zoom: 15,
-                            center: { lat: 18.533732, lng: 73.944721 },
+                }, error => {
+                    console.error(error);
+            });
+
+            //zip file for Road
+            const zip_road = new JSZip();
+            zip_road.file("data.wkt","ROAD\tWKT\n" + "Road" + "\t" + wkt_road);
+            zip_road.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1236"
+
                         }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+            const zip_house = new JSZip();
+            zip_house.file("data_home.wkt","HOUSE\tWKT\n" + "House" + "\t" + wkt_house);
+            zip_house.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1237"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+            navigator.geolocation.watchPosition(({coords}) => {
+
+                var lat = coords.latitude;
+                var lon = coords.longitude;
+                console.log(lat);
+                console.log(lon);
+
+
+
+                var geofencing = platform.getGeofencingService();
+
+
+
+                //click event on marker
+
+                /*map.addEventListener("tap", ev => {
+                    var target = ev.target;
+                    map.removeObject(marker);   /// removing the older marker when new one arrives
+                    marker = new H.map.Marker(map.screenToGeo(ev.currentPointer.viewportX, ev.currentPointer.viewportY));
+                    map.addObject(marker);*/
+
+                    //utilizing geofencing service
+                geofencing.request(
+                    H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
+                    {
+                        "layer_ids": ["1235", "1236", "1237"],
+                        "proximity": lat + "," + lon,
+                        "key_attributes": ["SHOP", "ROAD", "HOUSE"]
+                    },result => {
+                        if(result.geometries.length > 0) {
+                            swal("Within the geofence!");
+                            console.log("Found you buddy!!!!");
+                            console.log(result);
+                        }
+                    },
+                    error => {
+                        console.error(error);
+                    }
+
                 );
-                
-                const mapEvents = new H.mapevents.MapEvents(map);
-                const mapBehavior = new H.mapevents.Behavior(mapEvents);
 
-                
-                
-                //near by shop testing
-                const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 13);
-                map.addObject(shop);
+            });
 
-
-                const road = new H.map.Circle({lat: 18.534723, lng: 73.944817}, 13);
-                map.addObject(road);
-
-                const house = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 13);
-                map.addObject(house);
-
-                
-                //console getting the wkt format data
-                const geometry_shop = shop.getGeometry();
-                const wkt_shop = geometry_shop.toString();
-                console.log(wkt_shop);
-
-
-                const geometry_road = road.getGeometry();
-                const wkt_road = geometry_road.toString();
-                console.log(wkt_road);
-
-                const geometry_house = house.getGeometry();
-                const wkt_house = geometry_house.toString();
-                console.log(wkt_house);
-
-                
-
-                //zip file for shop
-                const zip_shop = new JSZip();
-                zip_shop.file("data_shop.wkt","SHOP\tWKT\n" + "Shop" + "\t" + wkt_shop);
-                zip_shop.generateAsync({ type: "blob" }).then(content => {
-                    var formData = new FormData();
-                    formData.append("zipfile", content);
-                    axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
-                        headers: {
-                            "content-type": "multipart/form-data"
-                        },
-                        params: {
-                            "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
-                            "layer_id": "1235"
-
-                            }
-                        }).then(result => {
-                            console.log(result);
-                        }, error => {
-                            console.error(error);
-                        });
-                    }, error => {
-                        console.error(error);
-                });
-
-                //zip file for Road
-                const zip_road = new JSZip();
-                zip_road.file("data.wkt","ROAD\tWKT\n" + "Road" + "\t" + wkt_road);
-                zip_road.generateAsync({ type: "blob" }).then(content => {
-                    var formData = new FormData();
-                    formData.append("zipfile", content);
-                    axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
-                        headers: {
-                            "content-type": "multipart/form-data"
-                        },
-                        params: {
-                            "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
-                            "layer_id": "1236"
-
-                            }
-                        }).then(result => {
-                            console.log(result);
-                        }, error => {
-                            console.error(error);
-                        });
-                    }, error => {
-                        console.error(error);
-                });
-                
-                const zip_house = new JSZip();
-                zip_house.file("data_home.wkt","HOUSE\tWKT\n" + "House" + "\t" + wkt_house);
-                zip_house.generateAsync({ type: "blob" }).then(content => {
-                    var formData = new FormData();
-                    formData.append("zipfile", content);
-                    axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
-                        headers: {
-                            "content-type": "multipart/form-data"
-                        },
-                        params: {
-                            "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
-                            "layer_id": "1237"
-
-                            }
-                        }).then(result => {
-                            console.log(result);
-                        }, error => {
-                            console.error(error);
-                        });
-                    }, error => {
-                        console.error(error);
-                });
-
-                navigator.geolocation.watchPosition(({coords}) => {
-                    
-                    var lat = coords.latitude;
-                    var lon = coords.longitude;
-                    console.log(lat);
-                    console.log(lon);
-                    
-                  
-                    
-                    var geofencing = platform.getGeofencingService();
-
-                    
-
-                    //click event on marker
-                    
-                    /*map.addEventListener("tap", ev => {
-                        var target = ev.target;
-                        map.removeObject(marker);   /// removing the older marker when new one arrives
-                        marker = new H.map.Marker(map.screenToGeo(ev.currentPointer.viewportX, ev.currentPointer.viewportY));
-                        map.addObject(marker);*/
-
-                        //utilizing geofencing service
-                    geofencing.request(
-                        H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
-                        {
-                            "layer_ids": ["1235", "1236", "1237"],
-                            "proximity": lat + "," + lon,
-                            "key_attributes": ["SHOP", "ROAD", "HOUSE"]
-                        },result => {
-                            if(result.geometries.length > 0) {
-                                swal("Within the geofence!");
-                                console.log("Found you buddy!!!!");
-                                console.log(result);
-                            }
-                        },
-                        error => {
-                            console.error(error);
-                        }
-                    
-                    );
-                    
-                });
-               
-        </script>
+    </script>
         
 </body>
 </html>

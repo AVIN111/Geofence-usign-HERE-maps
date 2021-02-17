@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <title>Get Current Position</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     function watchPosition() {
         if(navigator.geolocation) {
             navigator.geolocation.watchPosition(function(position) {
                 var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
-                alert("find ur position");
+                swal("find ur position");
                 document.getElementById("result").innerHTML = positionInfo;
             });
         } else {

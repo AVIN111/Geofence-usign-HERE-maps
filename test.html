@@ -20,7 +20,7 @@
                         'useCIT': true,
                         'useHTTPS': true,
                     });
-                    const map = new H.Map(
+                    const map = new H.Map (
                         document.getElementById('map'),
                         platform.createDefaultLayers().vector.normal.map,
                         {
@@ -161,14 +161,12 @@
                             "layer_ids": ["1235", "1236", "1237"],
                             "proximity": lat + "," + lon,
                             "key_attributes": ["SHOP", "ROAD", "HOUSE"]
-                        },
-                        result => {
+                        },result => {
                             if(result.geometries.length > 0) {
                                 swal("Within the geofence!");
                                 console.log("Found you buddy!!!!");
                                 console.log(result);
                             }
-
                         },
                         error => {
                             console.error(error);
@@ -176,9 +174,9 @@
                     
                     );
                     
-                    });
+                });
                
-            </script>
+        </script>
         
 </body>
 </html>

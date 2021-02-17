@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>Get Current Position</title>
 <script>
-    function showPosition() {
+    function watchPosition() {
         if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+            navigator.geolocation.watchPosition(function(position) {
                 var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
                 document.getElementById("result").innerHTML = positionInfo;
             });
@@ -20,6 +20,6 @@
     <div id="result">
         <!--Position information will be inserted here-->
     </div>
-    <button type="button" onclick="showPosition();">Show Position</button>
+    <button type="button" onclick="watchPosition();">Show Position</button>
 </body>
 </html>

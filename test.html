@@ -139,7 +139,7 @@
                     var lon = coords.longitude;
                     console.log(lat);
                     console.log(lon);
-                    swal("Within the geofence!");
+                    
                   
                     
                     var geofencing = platform.getGeofencingService();
@@ -155,24 +155,24 @@
                         map.addObject(marker);*/
 
                         //utilizing geofencing service
-                        geofencing.request(
-                            H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
-                            {
-                                "layer_ids": ["1235", "1236", "1237"],
-                                "proximity": lat + "," + lon,
-                                "key_attributes": ["SHOP", "ROAD", "HOUSE"]
-                            },
-                            result => {
-                                if(result.geometries.length > 0) {
-                                    swal("Within the geofence!");
-                                    console.log("Found you buddy!!!!");
-                                    console.log(result);
-                                }
-                                
-                            },
-                            error => {
-                                console.error(error);
+                    geofencing.request(
+                        H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
+                        {
+                            "layer_ids": ["1235", "1236", "1237"],
+                            "proximity": lat + "," + lon,
+                            "key_attributes": ["SHOP", "ROAD", "HOUSE"]
+                        },
+                        result => {
+                            if(result.geometries.length > 0) {
+                                swal("Within the geofence!");
+                                console.log("Found you buddy!!!!");
+                                console.log(result);
                             }
+
+                        },
+                        error => {
+                            console.error(error);
+                        }
                     
                     );
                     

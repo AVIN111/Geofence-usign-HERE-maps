@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Geofencing</title>
-        
-        
-        
-        
-    </head>
+
     <body style="margin: 0">
         <div id="map" style="width: 100vw; height: 100vh"></div>
         <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
@@ -37,18 +29,7 @@
                 const mapEvents = new H.mapevents.MapEvents(map);
                 const mapBehavior = new H.mapevents.Behavior(mapEvents);
 
-                // defining the polygon
-                /*const lineString = new H.geo.LineString();
-                lineString.pushPoint({ lat: 27.966079, lng: 76.401173});
-                lineString.pushPoint({ lat: 27.965363, lng: 76.405197});
-                lineString.pushPoint({ lat: 27.959809, lng: 76.404498});
-                lineString.pushPoint({ lat: 27.960042, lng: 76.400872});
-                lineString.pushPoint({ lat: 27.962212, lng: 76.400070});
-                lineString.pushPoint({ lat: 27.966079, lng: 76.401173});
-
-                //calling the polygon
-                const polygon = new H.map.Polygon(lineString);
-                map.addObject(polygon);*/
+                
                 
                 //near by shop testing
                 const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 13);

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <script src="https://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
-        <script src="https://raw.github.com/gorbiz/mobile-console.log/master/console.js" type="text/javascript"></script>
+        <title>Geofencing</title>
     </head>
     <body style="margin: 0">
         <div id="map" style="width: 100vw; height: 100vh"></div>
@@ -48,8 +47,6 @@
                 const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 13);
                 map.addObject(shop);
 
-                const home = new H.map.Circle({lat: 19.7514798, lng: 75.7138884}, 13);
-                map.addObject(home);
 
                 const road = new H.map.Circle({lat: 18.534723, lng: 73.944817}, 13);
                 map.addObject(road);
@@ -63,9 +60,6 @@
                 const wkt_shop = geometry_shop.toString();
                 console.log(wkt_shop);
 
-                const geometry_home = home.getGeometry();
-                const wkt_home = geometry_home.toString();
-                console.log(wkt_home);
 
                 const geometry_road = road.getGeometry();
                 const wkt_road = geometry_road.toString();
@@ -76,30 +70,6 @@
                 console.log(wkt_house);
 
                 
-                //creating zip file for home
-                const zip_home = new JSZip();
-                zip_home.file("data_home.wkt","HOME\tWKT\n" + "Home" + "\t" + wkt_home);
-                zip_home.generateAsync({ type: "blob" }).then(content => {
-                    var formData = new FormData();
-                    formData.append("zipfile", content);
-                    axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
-                        headers: {
-                            "content-type": "multipart/form-data",
-                            "Access-Control-Allow-Origin": "*",
-                        },
-                        params: {
-                            "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
-                            "layer_id": "1234"
-
-                        }
-                    }).then(result => {
-                        console.log(result);
-                    }, error => {
-                        console.error(error);
-                    });
-                }, error => {
-                    console.error(error);
-                });
 
                 //zip file for shop
                 const zip_shop = new JSZip();
@@ -202,13 +172,13 @@
                         geofencing.request(
                             H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
                             {
-                                "layer_ids": ["1234", "1235", "1236", "1237"],
+                                "layer_ids": ["1235", "1236", "1237"],
                                 "proximity": lat + "," + lon,
-                                "key_attributes": ["HOME", "SHOP", "ROAD", "HOUSE"]
+                                "key_attributes": ["SHOP", "ROAD", "HOUSE"]
                             },
                             result => {
                                 if(result.geometries.length > 0) {
-                                    alert("Within the geofence!");
+                                    swal("Within the geofence!");
                                     console.log(result);
                                 }
                                 

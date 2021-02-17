@@ -140,7 +140,9 @@
                 var lon = coords.longitude;
                 console.log(lat);
                 console.log(lon);
-
+                
+                var marker = new H.map.Marker({ lat: coords.latitude, lng: coords.longitude});
+                map.addObject(marker);
 
 
                 var geofencing = platform.getGeofencingService();

@@ -191,13 +191,28 @@
                 geofencing.request(
                     H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
                     {
-                        "layer_ids": ["1235", "1236", "1237","1238"],
+                        "layer_ids": ["1235", "1236", "1237", "1238"],
                         "proximity": lat + "," + lon,
-                        "key_attributes": ["SHOP", "ROAD", "HOUSE","SALOON"]
+                        "key_attributes": ["SHOP", "ROAD", "HOUSE", "SALOON"]
                     },result => {
                         if(result.geometries.length > 0) {
-                            swal("Within the geofence!");
-                            console.log(result);
+                            if(result.geometries[0].layerId == "1235") {
+                                swal("Buy Rs.10 Chips from the SHOP!");
+                                console.log(result);
+                            }
+                            else if(result.geometries[0].layerId == "1236"){
+                                swal("Cross the Road Carefully!!");
+                                console.log(result);
+                            }
+                            else if(result.geometries[0].layerId == "1237"){
+                                swal("Reached Home!!");
+                                console.log(result);
+                            }
+                            else if(result.geometries[0].layerId == "1238"){
+                                swal("Go To Saloon!!");
+                                console.log(result);
+                            }
+                           
                         }
                     },
                     error => {

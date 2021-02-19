@@ -36,15 +36,18 @@
 
 
             //near by shop testing
+            const house = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 20);
+            map.addObject(house);
+        
             const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 15);
             map.addObject(shop);
-
 
             const road = new H.map.Circle({lat: 18.534723, lng: 73.944817}, 20);
             map.addObject(road);
 
-            const house = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 20);
-            map.addObject(house);
+            const saloon = new H.map.Circle({lat: 18.534781, lng: 73.945834}, 30);
+            map.addObject(saloon);
+            
 
 
             //console getting the wkt format data
@@ -60,8 +63,12 @@
             const geometry_house = house.getGeometry();
             const wkt_house = geometry_house.toString();
             console.log(wkt_house);
+        
+            const geometry_saloon = saloon.getGeometry();
+            const wkt_saloon = geometry_saloon.toString();
+            console.log(wkt_saloon);
 
-
+    
 
             //zip file for shop
             const zip_shop = new JSZip();
@@ -133,6 +140,29 @@
                 }, error => {
                     console.error(error);
             });
+        
+            const zip_saloon = new JSZip();
+            zip_saloon.file("data_saloon.wkt","SALOON\tWKT\n" + "Saloon" + "\t" + wkt_saloon);
+            zip_saloon.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1238"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
 
             navigator.geolocation.watchPosition(({coords}) => {
 
@@ -161,9 +191,9 @@
                 geofencing.request(
                     H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
                     {
-                        "layer_ids": ["1235", "1236", "1237"],
+                        "layer_ids": ["1235", "1236", "1237","1238"],
                         "proximity": lat + "," + lon,
-                        "key_attributes": ["SHOP", "ROAD", "HOUSE"]
+                        "key_attributes": ["SHOP", "ROAD", "HOUSE","SALOON"]
                     },result => {
                         if(result.geometries.length > 0) {
                             swal("Within the geofence!");

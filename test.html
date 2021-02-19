@@ -45,7 +45,7 @@
             const road = new H.map.Circle({lat: 18.534723, lng: 73.944817}, 20);
             map.addObject(road);
 
-            const saloon = new H.map.Circle({lat: 18.534781, lng: 73.945834}, 30);
+            const saloon = new H.map.Circle({lat: 18.534781, lng: 73.945834}, 25);
             map.addObject(saloon);
             
 
@@ -197,7 +197,6 @@
                     },result => {
                         if(result.geometries.length > 0) {
                             swal("Within the geofence!");
-                            console.log("Found you buddy!!!!");
                             console.log(result);
                         }
                     },

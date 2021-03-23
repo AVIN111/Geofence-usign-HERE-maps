@@ -36,43 +36,44 @@
 
 
             //near by shop testing
-            const jalpilu = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 20);
+            const jalpilu = new H.map.Circle({lat: 27.965868, lng: 76.402353}, 20);
+
             map.addObject(jalpilu);
         
-            const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 15);
-            map.addObject(shop);
+            const ug2 = new H.map.Circle({lat: 27.960162, lng: 76.403924}, 30);
+            map.addObject(ug2);
 
-            const road = new H.map.Circle({lat: 18.534723, lng: 73.944817}, 20);
-            map.addObject(road);
+            const tpoint = new H.map.Circle({lat: 27.962827, lng: 76.402594}, 20); 
+            map.addObject(tpoint);
 
-            const saloon = new H.map.Circle({lat: 18.534781, lng: 73.945834}, 25);
-            map.addObject(saloon);
+            const nescafe = new H.map.Circle({lat: 27.960935, lng: 76.403179}, 25);
+            map.addObject(nescafe);
             
 
 
             //console getting the wkt format data
-            const geometry_shop = shop.getGeometry();
-            const wkt_shop = geometry_shop.toString();
-            console.log(wkt_shop);
+            const geometry_ug2 = ug2.getGeometry();
+            const wkt_ug2 = geometry_ug2.toString();
+            console.log(wkt_ug2);
 
 
-            const geometry_road = road.getGeometry();
-            const wkt_road = geometry_road.toString();
-            console.log(wkt_road);
+            const geometry_tpoint = tpoint.getGeometry();
+            const wkt_tpoint = geometry_tpoint.toString();
+            console.log(wkt_tpoint);
 
             const geometry_jalpilu = jalpilu.getGeometry();
             const wkt_jalpilu = geometry_jalpilu.toString();
             console.log(wkt_jalpilu);
         
-            const geometry_saloon = saloon.getGeometry();
-            const wkt_saloon = geometry_saloon.toString();
-            console.log(wkt_saloon);
+            const geometry_nescafe = nescafe.getGeometry();
+            const wkt_nescafe = geometry_nescafe.toString();
+            console.log(wkt_nescafe);
 
     
 
             //zip file for shop
             const zip_shop = new JSZip();
-            zip_shop.file("data_shop.wkt","SHOP\tWKT\n" + "Shop" + "\t" + wkt_shop);
+            zip_shop.file("data_ug2.wkt","UG2\tWKT\n" + "Ug2p" + "\t" + wkt_ug2);
             zip_shop.generateAsync({ type: "blob" }).then(content => {
                 var formData = new FormData();
                 formData.append("zipfile", content);
@@ -96,7 +97,7 @@
 
             //zip file for Road
             const zip_road = new JSZip();
-            zip_road.file("data.wkt","ROAD\tWKT\n" + "Road" + "\t" + wkt_road);
+            zip_road.file("data.wkt","TPOINT\tWKT\n" + "Tpoint" + "\t" + wkt_tpoint);
             zip_road.generateAsync({ type: "blob" }).then(content => {
                 var formData = new FormData();
                 formData.append("zipfile", content);
@@ -142,7 +143,7 @@
             });
         
             const zip_saloon = new JSZip();
-            zip_saloon.file("data_saloon.wkt","SALOON\tWKT\n" + "Saloon" + "\t" + wkt_saloon);
+            zip_saloon.file("data_nescafe.wkt","NESCAFE\tWKT\n" + "Nescafe" + "\t" + wkt_nescafe);
             zip_saloon.generateAsync({ type: "blob" }).then(content => {
                 var formData = new FormData();
                 formData.append("zipfile", content);
@@ -193,11 +194,11 @@
                     {
                         "layer_ids": ["1235", "1236", "1237", "1238"],
                         "proximity": lat + "," + lon,
-                        "key_attributes": ["SHOP", "ROAD", "JALPILU", "SALOON"]
+                        "key_attributes": ["UG2", "TPOINT", "JALPILU", "NESCAFE"]
                     },result => {
                         if(result.geometries.length > 0) {
                             if(result.geometries[0].layerId == "1235") {
-                                swal("Buy Rs.10 Chips from the SHOP!");
+                                swal("Reached UG2 Boys Hostel!");
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1236"){
@@ -209,7 +210,7 @@
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1238"){
-                                swal("Go To Saloon!!");
+                                swal("Have a cup of COFFEE!!");
                                 console.log(result);
                             }
                            

@@ -26,7 +26,7 @@
                     platform.createDefaultLayers().vector.normal.map,
                     {
                         zoom: 15,
-                        center: { lat: 18.533732, lng: 73.944721 },
+                        center: { lat: 27.961809, lng: 76.401522 },
                     }
             );
 
@@ -36,8 +36,8 @@
 
 
             //near by shop testing
-            const house = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 20);
-            map.addObject(house);
+            const jalpilu = new H.map.Circle({lat: 18.533722, lng: 73.944727}, 20);
+            map.addObject(jalpilu);
         
             const shop = new H.map.Circle({lat: 18.534038, lng: 73.944697}, 15);
             map.addObject(shop);
@@ -60,9 +60,9 @@
             const wkt_road = geometry_road.toString();
             console.log(wkt_road);
 
-            const geometry_house = house.getGeometry();
-            const wkt_house = geometry_house.toString();
-            console.log(wkt_house);
+            const geometry_jalpilu = jalpilu.getGeometry();
+            const wkt_jalpilu = geometry_jalpilu.toString();
+            console.log(wkt_jalpilu);
         
             const geometry_saloon = saloon.getGeometry();
             const wkt_saloon = geometry_saloon.toString();
@@ -119,7 +119,7 @@
             });
 
             const zip_house = new JSZip();
-            zip_house.file("data_home.wkt","HOUSE\tWKT\n" + "House" + "\t" + wkt_house);
+            zip_house.file("data_jalpilu.wkt","JALPILU\tWKT\n" + "Jalpilu" + "\t" + wkt_jalpilu);
             zip_house.generateAsync({ type: "blob" }).then(content => {
                 var formData = new FormData();
                 formData.append("zipfile", content);
@@ -193,7 +193,7 @@
                     {
                         "layer_ids": ["1235", "1236", "1237", "1238"],
                         "proximity": lat + "," + lon,
-                        "key_attributes": ["SHOP", "ROAD", "HOUSE", "SALOON"]
+                        "key_attributes": ["SHOP", "ROAD", "JALPILU", "SALOON"]
                     },result => {
                         if(result.geometries.length > 0) {
                             if(result.geometries[0].layerId == "1235") {
@@ -205,7 +205,7 @@
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1237"){
-                                swal("Reached Home!!");
+                                swal("Reached JALPILU!!");
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1238"){

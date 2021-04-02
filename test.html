@@ -37,28 +37,28 @@
 
             //near by shop testing
 
-            const gate = new H.map.Circle({lat: 27.966162, lng: 76.400912}, 20);
+            const gate = new H.map.Circle({lat: 27.966162, lng: 76.400912}, 25);
             map.addObject(gate);
 
-            const jalpilu = new H.map.Circle({lat: 27.965868, lng: 76.402353}, 20);
+            const jalpilu = new H.map.Circle({lat: 27.965868, lng: 76.402353}, 25);
             map.addObject(jalpilu);
 
-            const nep = new H.map.Circle({lat: 27.965373058051192, lng: 76.40445312326406}, 20); 
+            const nep = new H.map.Circle({lat: 27.965373058051192, lng: 76.40445312326406}, 25); 
             map.addObject(nep);
         
-            const tpoint = new H.map.Circle({lat: 27.962827, lng: 76.402594}, 20); 
+            const tpoint = new H.map.Circle({lat: 27.962827, lng: 76.402594}, 25); 
             map.addObject(tpoint);
             
-            const bowl = new H.map.Circle({lat: 27.961995999717438, lng: 76.40213089390144}, 40); 
+            const bowl = new H.map.Circle({lat: 27.961995999717438, lng: 76.40213089390144}, 60); 
             map.addObject(bowl);
 
             const reception = new H.map.Circle({lat: 27.961184797254877, lng: 76.40177504638268}, 30);  
             map.addObject(reception);
 
-            const ug1 = new H.map.Circle({lat: 27.961407818267773, lng: 76.40358802252155}, 30); 
+            const ug1 = new H.map.Circle({lat: 27.961407818267773, lng: 76.40358802252155}, 35); 
             map.addObject(ug1);
 
-            const ug2 = new H.map.Circle({lat: 27.960325411546986, lng: 76.4040226234045}, 30);  
+            const ug2 = new H.map.Circle({lat: 27.960325411546986, lng: 76.4040226234045}, 35);  
             map.addObject(ug2);
 
             const nescafe = new H.map.Circle({lat: 27.960935, lng: 76.403179}, 25);
@@ -178,8 +178,8 @@
 
             //zip file for reception
             const zip_reception = new JSZip();
-            zip_reception.file("data_reception.wkt","RECEPTION\tWKT\n" + "receptionp" + "\t" + wkt_reception);
-            zip_bowl.generateAsync({ type: "blob" }).then(content => {
+            zip_reception.file("data_reception.wkt","RECEPTION\tWKT\n" + "reception" + "\t" + wkt_reception);
+            zip_reception.generateAsync({ type: "blob" }).then(content => {
                 var formData = new FormData();
                 formData.append("zipfile", content);
                 axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {

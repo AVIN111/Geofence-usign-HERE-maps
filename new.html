@@ -16,12 +16,20 @@
             alert("Sorry, your browser does not support HTML5 geolocation.");
         }
     }
+    function startBluetooth(){
+    navigator.bluetooth.requestDevice({ filters: [{ services: ['battery_service'] }] })
+    .then(device => { /* ... */ })
+    .catch(error => { console.log(error); });
+    }
 </script>
+
 </head>
 <body>
     <div id="result">
         <!--Position information will be inserted here-->
     </div>
     <button type="button" onclick="watchPosition();">Show Position</button>
+    
+    <button onClick="startBluetooth();">Connect to Bluetooth device</button>
 </body>
 </html>

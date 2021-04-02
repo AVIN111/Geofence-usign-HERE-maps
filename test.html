@@ -36,15 +36,30 @@
 
 
             //near by shop testing
+
+            const gate = new H.map.Circle({lat: 27.966162, lng: 76.400912}, 20);
+            map.addObject(gate);
+
             const jalpilu = new H.map.Circle({lat: 27.965868, lng: 76.402353}, 20);
-
             map.addObject(jalpilu);
-        
-            const ug2 = new H.map.Circle({lat: 27.960162, lng: 76.403924}, 30);
-            map.addObject(ug2);
 
+            const nep = new H.map.Circle({lat: 27.965373058051192, lng: 76.40445312326406}, 20); 
+            map.addObject(nep);
+        
             const tpoint = new H.map.Circle({lat: 27.962827, lng: 76.402594}, 20); 
             map.addObject(tpoint);
+            
+            const bowl = new H.map.Circle({lat: 27.961995999717438, lng: 76.40213089390144}, 40); 
+            map.addObject(bowl);
+
+            const reception = new H.map.Circle({lat: 27.961184797254877, lng: 76.40177504638268}, 30);  
+            map.addObject(reception);
+
+            const ug1 = new H.map.Circle({lat: 27.961407818267773, lng: 76.40358802252155}, 30); 
+            map.addObject(ug1);
+
+            const ug2 = new H.map.Circle({lat: 27.960325411546986, lng: 76.4040226234045}, 30);  
+            map.addObject(ug2);
 
             const nescafe = new H.map.Circle({lat: 27.960935, lng: 76.403179}, 25);
             map.addObject(nescafe);
@@ -52,26 +67,165 @@
 
 
             //console getting the wkt format data
-            const geometry_ug2 = ug2.getGeometry();
-            const wkt_ug2 = geometry_ug2.toString();
-            console.log(wkt_ug2);
+            const geometry_gate = gate.getGeometry();
+            const wkt_gate = geometry_gate.toString();
+            console.log(wkt_gate);
 
+            const geometry_jalpilu = jalpilu.getGeometry();
+            const wkt_jalpilu = geometry_jalpilu.toString();
+            console.log(wkt_jalpilu);
+
+            const geometry_nep = nep.getGeometry();
+            const wkt_nep = geometry_nep.toString();
+            console.log(wkt_nep);
 
             const geometry_tpoint = tpoint.getGeometry();
             const wkt_tpoint = geometry_tpoint.toString();
             console.log(wkt_tpoint);
 
-            const geometry_jalpilu = jalpilu.getGeometry();
-            const wkt_jalpilu = geometry_jalpilu.toString();
-            console.log(wkt_jalpilu);
+            const geometry_bowl = bowl.getGeometry();
+            const wkt_bowl = geometry_bowl.toString();
+            console.log(wkt_bowl);
+
+            const geometry_reception = reception.getGeometry();
+            const wkt_reception = geometry_reception.toString();
+            console.log(wkt_reception);
+                        
         
             const geometry_nescafe = nescafe.getGeometry();
             const wkt_nescafe = geometry_nescafe.toString();
             console.log(wkt_nescafe);
 
-    
+            const geometry_ug1 = ug1.getGeometry();
+            const wkt_ug1 = geometry_ug1.toString();
+            console.log(wkt_ug1);
 
-            //zip file for shop
+            const geometry_ug2 = ug2.getGeometry();
+            const wkt_ug2 = geometry_ug2.toString();
+            console.log(wkt_ug2);
+
+            //ZIP file for NU gate
+            const zip_gate = new JSZip();
+            zip_gate.file("data_gate.wkt","GATE\tWKT\n" + "gate" + "\t" + wkt_gate);
+            zip_gate.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1234"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+            //ZIP file for NEP 
+            const zip_nep = new JSZip();
+            zip_nep.file("data_nep.wkt","NEP\tWKT\n" + "nep" + "\t" + wkt_nep);
+            zip_nep.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1239"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+            //zip file for Bowl
+            const zip_bowl = new JSZip();
+            zip_bowl.file("data_bowl.wkt","BOWL\tWKT\n" + "bowlp" + "\t" + wkt_bowl);
+            zip_bowl.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1233"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+            //zip file for reception
+            const zip_reception = new JSZip();
+            zip_reception.file("data_reception.wkt","RECEPTION\tWKT\n" + "receptionp" + "\t" + wkt_reception);
+            zip_bowl.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1231"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+
+            //zip file for ug1
+            const zip_ug1 = new JSZip();
+            zip_ug1.file("data_ug1.wkt","UG1\tWKT\n" + "Ug1p" + "\t" + wkt_ug1);
+            zip_ug1.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1232"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
+            //zip file for UG2
             const zip_shop = new JSZip();
             zip_shop.file("data_ug2.wkt","UG2\tWKT\n" + "Ug2p" + "\t" + wkt_ug2);
             zip_shop.generateAsync({ type: "blob" }).then(content => {
@@ -192,17 +346,39 @@
                 geofencing.request(
                     H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
                     {
-                        "layer_ids": ["1235", "1236", "1237", "1238"],
+                        "layer_ids": ["1231", "1232", "1233", "1234", "1235", "1236", "1237", "1238", "1239"],
                         "proximity": lat + "," + lon,
-                        "key_attributes": ["UG2", "TPOINT", "JALPILU", "NESCAFE"]
+                        "key_attributes": ["RECEPTION", "UG1", "BOWL", "GATE", "UG2", "TPOINT", "JALPILU", "NESCAFE", "NEP"]
                     },result => {
                         if(result.geometries.length > 0) {
-                            if(result.geometries[0].layerId == "1235") {
+                            if(result.geometries[0].layerId == "1231") {
+                                swal("You have reached to NU reception. PLease switch on your buetooth.");
+                                console.log(result);
+                                
+                            }
+                            else if(result.geometries[0].layerId == "1232") {
+                                swal("You reached UG1 hostel");
+                                console.log(result);
+                                
+                            }
+                            else if(result.geometries[0].layerId == "1233") {
+                                swal("This is main lawn or bowl area.");
+                                console.log(result);
+                                
+                            }
+                            else if(result.geometries[0].layerId == "1234") {
+                                swal("WELCOME TO NU. Let's begin the tour.");
+                                console.log(result);
+                                
+                            }
+
+                            else if(result.geometries[0].layerId == "1235") {
                                 swal("Reached UG2 Boys Hostel!");
                                 console.log(result);
+                                
                             }
                             else if(result.geometries[0].layerId == "1236"){
-                                swal("Cross the Road Carefully!!");
+                                swal("This is T point from here, GO straight for reception desk or take a turn for UG hostels.");
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1237"){
@@ -211,6 +387,10 @@
                             }
                             else if(result.geometries[0].layerId == "1238"){
                                 swal("Have a cup of COFFEE!!");
+                                console.log(result);
+                            }
+                            else if(result.geometries[0].layerId == "1239"){
+                                swal("This is NEP (North East Point)!!");
                                 console.log(result);
                             }
                            

@@ -364,17 +364,6 @@
 
                 var geofencing = platform.getGeofencingService();
 
-
-
-                //click event on marker
-
-                /*map.addEventListener("tap", ev => {
-                    var target = ev.target;
-                    map.removeObject(marker);   /// removing the older marker when new one arrives
-                    marker = new H.map.Marker(map.screenToGeo(ev.currentPointer.viewportX, ev.currentPointer.viewportY));
-                    map.addObject(marker);*/
-
-                    //utilizing geofencing service
                 geofencing.request(
                     H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
                     {

@@ -13,7 +13,8 @@
     <script src="https://js.api.here.com/v3/3.1.22.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://stuk.github.io/jszip/dist/jszip.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
     <script>
 
             const platform = new H.service.Platform ({
@@ -58,11 +59,14 @@
             const ug1 = new H.map.Circle({lat: 27.961407818267773, lng: 76.40358802252155}, 35); 
             map.addObject(ug1);
 
-            const ug2 = new H.map.Circle({lat: 27.960325411546986, lng: 76.4040226234045}, 35);  
+            const ug2 = new H.map.Circle({lat: 27.960275281494212, lng: 76.40389306423917}, 35);
             map.addObject(ug2);
 
             const nescafe = new H.map.Circle({lat: 27.960935, lng: 76.403179}, 25);
             map.addObject(nescafe);
+            
+            const symbol = new H.map.Circle({lat: 27.957860399999998, lng: 76.3984424}, 25);
+            map.addObject(symbol);
             
 
 
@@ -103,6 +107,10 @@
             const geometry_ug2 = ug2.getGeometry();
             const wkt_ug2 = geometry_ug2.toString();
             console.log(wkt_ug2);
+
+            const geometry_symbol = symbol.getGeometry();
+            const wkt_symbol = geometry_symbol.toString();
+            console.log(wkt_symbol);
 
             //ZIP file for NU gate
             const zip_gate = new JSZip();
@@ -152,9 +160,33 @@
                     console.error(error);
             });
 
+            //ZIP file for Aadi Annant
+            const zip_symbol = new JSZip();
+            zip_symbol.file("data_symbol.wkt","SYMBOL\tWKT\n" + "symbol" + "\t" + wkt_symbol);
+            zip_symbol.generateAsync({ type: "blob" }).then(content => {
+                var formData = new FormData();
+                formData.append("zipfile", content);
+                axios.post("https://fleet.ls.hereapi.com/2/layers/upload.json", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    },
+                    params: {
+                        "apikey" : "fCu-HyXjN1q4AFNUHHm_9KK67SuGNeFqfY9-AP7v2Hk",
+                        "layer_id": "1240"
+
+                        }
+                    }).then(result => {
+                        console.log(result);
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+            });
+
             //zip file for Bowl
             const zip_bowl = new JSZip();
-            zip_bowl.file("data_bowl.wkt","BOWL\tWKT\n" + "bowlp" + "\t" + wkt_bowl);
+            zip_bowl.file("data_bowl.wkt","BOWL\tWKT\n" + "bowl" + "\t" + wkt_bowl);
             zip_bowl.generateAsync({ type: "blob" }).then(content => {
                 var formData = new FormData();
                 formData.append("zipfile", content);
@@ -346,51 +378,157 @@
                 geofencing.request(
                     H.service.extension.geofencing.Service.EntryPoint.SEARCH_PROXIMITY,
                     {
-                        "layer_ids": ["1231", "1232", "1233", "1234", "1235", "1236", "1237", "1238", "1239"],
+                        "layer_ids": ["1231", "1232", "1233", "1234", "1235", "1236", "1237", "1238", "1239", "1240"],
                         "proximity": lat + "," + lon,
-                        "key_attributes": ["RECEPTION", "UG1", "BOWL", "GATE", "UG2", "TPOINT", "JALPILU", "NESCAFE", "NEP"]
+                        "key_attributes": ["RECEPTION", "UG1", "BOWL", "GATE", "UG2", "TPOINT", "JALPILU", "NESCAFE", "NEP", "SYMBOL"]
                     },result => {
                         if(result.geometries.length > 0) {
                             if(result.geometries[0].layerId == "1231") {
-                                swal("You have reached to NU reception. PLease switch on your buetooth.");
+                                Swal.fire({
+                                    title: "RECEPTION",
+                                    text: "This the reception and also the main academic building, on the left it is AC1 and on the right it is AC2.",
+                                    imageUrl: "img/reception.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "reception Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                                 
                             }
                             else if(result.geometries[0].layerId == "1232") {
-                                swal("You reached UG1 hostel");
+                                Swal.fire({
+                                    title: "UG1",
+                                    text: "It is boys hostel. Has to phases like phase I and phase II.",
+                                    imageUrl: "img/ug1.jpg",
+                                    imageWidth: 550,
+                                    imageHeight: 225,
+                                    imageAlt: "UG1 Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                                 
                             }
                             else if(result.geometries[0].layerId == "1233") {
-                                swal("This is main lawn or bowl area.");
+                                Swal.fire({
+                                    title: "BOWL Area",
+                                    text: "This is Bowl area also known as Lawn area.",
+                                    imageUrl: "img/lawn.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "lawn Image",
+                                    showCancelButton: true,
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                                 
                             }
                             else if(result.geometries[0].layerId == "1234") {
-                                swal("WELCOME TO NU. Let's begin the tour.");
+                                Swal.fire({
+                                    title: "NU GATE",
+                                    text: "This is the main and only entrance into the campus.",
+                                    imageUrl: "img/gate.jpeg",
+                                    imageWidth: 840,
+                                    imageHeight: 500,
+                                    imageAlt: "gate Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                                 
                             }
 
                             else if(result.geometries[0].layerId == "1235") {
-                                swal("Reached UG2 Boys Hostel!");
+                                //swal("Reached UG2 Boys Hostel!");
+                                Swal.fire({
+                                    title: "UG2",
+                                    text: "It is boys hostel. Has to phases like phase I and phase II.",
+                                    imageUrl: "img/ug2.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "UG2 Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                                 
                             }
                             else if(result.geometries[0].layerId == "1236"){
-                                swal("This is T point from here, GO straight for reception desk or take a turn for UG hostels.");
+                                Swal.fire({
+                                    title: "T-Point",
+                                    text: "This is tpoint. From here you can go to NU reception or hostels.",
+                                    imageUrl: "img/tpoint.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "tpoint Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1237"){
-                                swal("Reached JALPILU!!");
+                                Swal.fire({
+                                    title: "JAAL PILU",
+                                    text: "This is JAAL PILU. One of the oldest tree in the campus said to be there before campus was built.",
+                                    imageUrl: "img/jaal.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "jaal Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1238"){
-                                swal("Have a cup of COFFEE!!");
+                                Swal.fire({
+                                    title: "Nescafe",
+                                    text: "It is a Nescafe coffe show, here you can have snacks like pizza, burger and more.",
+                                    imageUrl: "img/nescafe.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "Nescafe Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                             }
                             else if(result.geometries[0].layerId == "1239"){
-                                swal("This is NEP (North East Point)!!");
+                                Swal.fire({
+                                    title: "NEP",
+                                    text: "This is North East Point",
+                                    imageUrl: "img/nep.jpeg",
+                                    imageWidth: 1032,
+                                    imageHeight: 550,
+                                    imageAlt: "NEP Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
+                                console.log(result);
+                            }
+                            else if(result.geometries[0].layerId == "1240"){
+                                Swal.fire({
+                                    title: "AADI ANANT",
+                                    text: "This is NU Symbol AADI ANANT",
+                                    imageUrl: "img/symbol.jpeg",
+                                    imageWidth: 550,
+                                    imageHeight: 1000,
+                                    imageAlt: "NU symbol Image",
+                                    confirmButtonText: "okay",
+                                    confirmButtonColor: "#00ff55",
+                                    reverseButtons: true,
+                                  });
                                 console.log(result);
                             }
                            

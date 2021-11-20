@@ -38,19 +38,19 @@
 
             //near by shop testing
 
-            const gate = new H.map.Circle({lat: 18.529543787668658, lng: 73.94673789763705}, 25);
+            const gate = new H.map.Circle({lat: 18.529543787668658, lng: 73.94673789763705}, 40);
             map.addObject(gate);
 
-            const jalpilu = new H.map.Circle({lat: 18.53710157203546, lng: 73.9460132451373}, 25);
+            const jalpilu = new H.map.Circle({lat: 18.53710157203546, lng: 73.9460132451373}, 40);
             map.addObject(jalpilu);
 
-            const nep = new H.map.Circle({lat: 18.532366447918136, lng: 73.93200204375206}, 25); 
+            const nep = new H.map.Circle({lat: 18.532366447918136, lng: 73.93200204375206}, 40); 
             map.addObject(nep);
         
-            const tpoint = new H.map.Circle({lat: 18.53399219180742, lng: 73.9462116975783}, 25); 
+            const tpoint = new H.map.Circle({lat: 18.53399219180742, lng: 73.9462116975783}, 80); 
             map.addObject(tpoint);
             
-            const bowl = new H.map.Circle({lat: 18.552955685877443, lng: 73.94845600580054}, 60); 
+            const bowl = new H.map.Circle({lat: 18.528972578584906, lng: 73.94573405147105}, 40); 
             map.addObject(bowl);
 
             const reception = new H.map.Circle({lat: 27.961184797254877, lng: 76.40177504638268}, 30);  
@@ -357,12 +357,12 @@
                 
                     var acc = pos.coords.accuracy;
                     var lat = pos.coords.latitude;
-                    var lon = pos.coords.longitude;
+                    var lon = pos.coords.longitude; 
                     console.log(acc);
                     console.log(lat);
                     console.log(lon);
                     
-                    var marker = new H.map.Marker({ lat: pos.coords.latitude, lng: pos.coords.longitude});
+                    var marker = new H.map.Marker({ lat: 18.53399219180742, lng: 73.9462116975783 }); 
                     map.addObject(marker);
 
 
@@ -375,160 +375,20 @@
                             "proximity": lat + "," + lon,
                             "key_attributes": ["RECEPTION", "UG1", "BOWL", "GATE", "UG2", "TPOINT", "JALPILU", "NESCAFE", "NEP", "SYMBOL"]
                         },result => {
-                            if(result.geometries.length > 0) {
-                                if(result.geometries[0].layerId == "1231") {
-                                    Swal.fire({
-                                        title: "RECEPTION",
-                                        text: "This the reception and also the main academic building, on the left it is AC1 and on the right it is AC2.",
-                                        imageUrl: "img/reception.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "reception Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                    
+                            Swal.fire({
+                                title: "T-Point",
+                                text: "PLease refuel your vehicle, The nearest Charging station is LONKAR.",
+                                imageUrl: "img/lonkar.png",
+                                imageWidth: 1032,
+                                imageHeight: 550,
+                                imageAlt: "lonkar Image",
+                                confirmButtonText: "okay",
+                                confirmButtonColor: "#00ff55",
+                                reverseButtons: true,
+                                         });
+                                         console.log(result);
+                                     
                                 }
-                                else if(result.geometries[0].layerId == "1232") {
-                                    Swal.fire({
-                                        title: "UG1",
-                                        text: "It is boys hostel. Has to phases like phase I and phase II.",
-                                        imageUrl: "img/ug1.jpg",
-                                        imageWidth: 550,
-                                        imageHeight: 225,
-                                        imageAlt: "UG1 Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                    
-                                }
-                                else if(result.geometries[0].layerId == "1233") {
-                                    Swal.fire({
-                                        title: "BOWL Area",
-                                        text: "This is Bowl area also known as Lawn area.",
-                                        imageUrl: "img/lawn.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "lawn Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                    
-                                }
-                                else if(result.geometries[0].layerId == "1234") {
-                                    Swal.fire({
-                                        title: "NU GATE",
-                                        text: "This is the main and only entrance into the campus.",
-                                        imageUrl: "img/gate.jpeg",
-                                        imageWidth: 840,
-                                        imageHeight: 500,
-                                        imageAlt: "gate Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                    
-                                }
-
-                                else if(result.geometries[0].layerId == "1235") {
-                                    //swal("Reached UG2 Boys Hostel!");
-                                    Swal.fire({
-                                        title: "UG2",
-                                        text: "It is boys hostel. Has to phases like phase I and phase II.",
-                                        imageUrl: "img/ug2.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "UG2 Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                    
-                                }
-                                else if(result.geometries[0].layerId == "1236"){
-                                    Swal.fire({
-                                        title: "T-Point",
-                                        text: "This is tpoint. From here you can go to NU reception or hostels.",
-                                        imageUrl: "img/tpoint.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "tpoint Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                }
-                                else if(result.geometries[0].layerId == "1237"){
-                                    Swal.fire({
-                                        title: "JAAL PILU",
-                                        text: "This is JAAL PILU. One of the oldest tree in the campus said to be there before campus was built.",
-                                        imageUrl: "img/jaal.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "jaal Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                }
-                                else if(result.geometries[0].layerId == "1238"){
-                                    Swal.fire({
-                                        title: "Nescafe",
-                                        text: "It is a Nescafe coffe show, here you can have snacks like pizza, burger and more.",
-                                        imageUrl: "img/nescafe.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "Nescafe Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                }
-                                else if(result.geometries[0].layerId == "1239"){
-                                    Swal.fire({
-                                        title: "NEP",
-                                        text: "This is North East Point",
-                                        imageUrl: "img/nep.jpeg",
-                                        imageWidth: 1032,
-                                        imageHeight: 550,
-                                        imageAlt: "NEP Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                }
-                                else if(result.geometries[0].layerId == "1240"){
-                                    Swal.fire({
-                                        title: "AADI ANANT",
-                                        text: "This is NU Symbol AADI ANANT",
-                                        imageUrl: "img/symbol.jpeg",
-                                        imageWidth: 550,
-                                        imageHeight: 1000,
-                                        imageAlt: "NU symbol Image",
-                                        confirmButtonText: "okay",
-                                        confirmButtonColor: "#00ff55",
-                                        reverseButtons: true,
-                                    });
-                                    console.log(result);
-                                }
-                            
-                            }
-                        },
-                        error => {
-                            console.error(error);
-                        }
 
                     );
                 },function error(msg){
